@@ -15,7 +15,8 @@ module.exports = function (req, res, next) {
     res.end();
     return;
   } else if ((req.url.startsWith("/products") && req.method != "GET") || (req.url.startsWith("/orders") && req.method != "POST")) {
-    let token = req.headers["authorization"];
+    var query = require('url').parse(req.url,true).query;
+    let token = query.Authorization;
     if (token != null && token.startsWith("Bearer<")) {
       token = token.substring(7, token.length - 1);
       try {
